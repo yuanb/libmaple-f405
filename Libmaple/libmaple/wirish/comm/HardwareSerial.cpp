@@ -36,8 +36,10 @@
 #include "HardwareSerial.h"
 #include "boards.h"
 
+#ifdef BOARD_USART1_TX_PIN
 #define TX1 BOARD_USART1_TX_PIN
 #define RX1 BOARD_USART1_RX_PIN
+#endif
 
 #ifdef BOARD_USART2_TX_PIN
 	#define TX2 BOARD_USART2_TX_PIN
@@ -52,11 +54,15 @@
 #if defined STM32_HIGH_DENSITY && !defined(BOARD_maple_RET6)
 #define TX4 BOARD_UART4_TX_PIN
 #define RX4 BOARD_UART4_RX_PIN
+#ifdef BOARD_UART5_TX_PIN
 #define TX5 BOARD_UART5_TX_PIN
 #define RX5 BOARD_UART5_RX_PIN
 #endif
+#endif
 
+#ifdef TX1
 HardwareSerial Serial1(USART1, TX1, RX1);
+#endif
 
 #ifdef TX2
 HardwareSerial Serial2(USART2, TX2, RX2);
@@ -66,8 +72,11 @@ HardwareSerial Serial2(USART2, TX2, RX2);
 HardwareSerial Serial3(USART3, TX3, RX3);
 #endif
 
-#if defined(STM32_HIGH_DENSITY) && !defined(BOARD_maple_RET6)
+#ifdef TX4
 HardwareSerial Serial4(UART4,  TX4, RX4);
+#endif
+
+#ifdef TX5
 HardwareSerial Serial5(UART5,  TX5, RX5);
 #endif
 

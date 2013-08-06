@@ -8,8 +8,8 @@ CPUCLASS = STM32F2
 
 #BOARD    = aeroquad32mini
 #MEMORY	 = flash128k_ram20k
-BOARD    = aeroquad32
-#BOARD    = DiscoveryF4
+#BOARD    = aeroquad32
+BOARD    = DiscoveryF4
 MEMORY	 = flash512k_ram64k
 
 

@@ -10,7 +10,7 @@ MEMORY
   rom (rx)  : ORIGIN = 0x08010000, LENGTH = 0K  /* ala42 */
 }
 
-GROUP(libcs3_stm32_high_density.a)
+GROUP(libcs4_stm32_high_density.a)
 
 REGION_ALIAS("REGION_TEXT", ram);
 REGION_ALIAS("REGION_DATA", ram);

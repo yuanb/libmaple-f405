@@ -31,7 +31,7 @@
 /** @defgroup USB_CONF_Exported_Defines
   * @{
   */ 
-#define USE_USB_OTG_HS  
+//#define USE_USB_OTG_HS
 
 #define USBD_CFG_MAX_NUM           1
 #define USB_MAX_STR_DESC_SIZ       64 

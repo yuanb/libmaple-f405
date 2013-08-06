@@ -187,6 +187,9 @@ typedef enum gpio_pin_mode {
                      GPIO_PUPD_INPUT_PU), /**< Input pull-up. */
     GPIO_AF_INPUT_PD = (GPIO_MODE_AF |
                      GPIO_PUPD_INPUT_PD), /**< Input pull-down. */
+    GPIO_AF_OUTPUT_PP_100MHZ = (GPIO_MODE_AF | GPIO_OTYPE_PP |
+                         GPIO_OSPEED_100MHZ), /**< Alternate function
+                                                   output push-pull, 100Mhz. */
 	GPIO_BIGNUMBER = 0xfff
 } gpio_pin_mode;
 

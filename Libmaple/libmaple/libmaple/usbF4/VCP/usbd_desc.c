@@ -47,20 +47,20 @@
 /** @defgroup USBD_DESC_Private_Defines
   * @{
   */ 
-#define USBD_VID                        0x0483
+#define USBD_VID                        0x1EAF
 
-#define USBD_PID                        0x5740
+#define USBD_PID                        0x0004
 
 /** @defgroup USB_String_Descriptors
   * @{
   */ 
 #define USBD_LANGID_STRING              0x409
-#define USBD_MANUFACTURER_STRING        (uint8_t*)"STMicroelectronics"
+#define USBD_MANUFACTURER_STRING        (uint8_t*)"LeafLabs"
 
 #define USBD_PRODUCT_HS_STRING          (uint8_t*)"STM32 Virtual ComPort in HS mode"
 #define USBD_SERIALNUMBER_HS_STRING     (uint8_t*)"00000000050B"
 
-#define USBD_PRODUCT_FS_STRING          (uint8_t*)"STM32 Virtual ComPort  in FS Mode"
+#define USBD_PRODUCT_FS_STRING          (uint8_t*)"Maple   "
 #define USBD_SERIALNUMBER_FS_STRING     (uint8_t*)"00000000050C"
 
 #define USBD_CONFIGURATION_HS_STRING    (uint8_t*)"VCP Config"
@@ -109,7 +109,7 @@ __ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_SIZ_DEVICE_DESC] __ALIGN_END =
     USB_DEVICE_DESCRIPTOR_TYPE, /*bDescriptorType*/
     0x00,                       /*bcdUSB */
     0x02,
-    0x00,                       /*bDeviceClass*/
+    0x02,                       // SCOTT LIBERT 6/7/2013 - Was 0x00 /*bDeviceClass*/
     0x00,                       /*bDeviceSubClass*/
     0x00,                       /*bDeviceProtocol*/
     USB_OTG_MAX_EP0_SIZE,      /*bMaxPacketSize*/
@@ -121,7 +121,7 @@ __ALIGN_BEGIN uint8_t USBD_DeviceDesc[USB_SIZ_DEVICE_DESC] __ALIGN_END =
     0x02,
     USBD_IDX_MFC_STR,           /*Index of manufacturer  string*/
     USBD_IDX_PRODUCT_STR,       /*Index of product string*/
-    USBD_IDX_SERIAL_STR,        /*Index of serial number string*/
+    0x00, // SCOTT LIBERT 6/7/2013 - USBD_IDX_SERIAL_STR,        /*Index of serial number string*/
     USBD_CFG_MAX_NUM            /*bNumConfigurations*/
   } ; /* USB_DeviceDescriptor */
 

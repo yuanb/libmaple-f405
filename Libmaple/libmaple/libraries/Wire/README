@@ -1,3 +1,8 @@
+The wire library has been updated to the latest source 
+from the libmaple library, which now contains both a hardware and a software (bit-banged) implmentation.
+
+**** ORIGINAL TEXT BELOW ****
+
 Wirish soft (bit-banged) implementation of the Wire I2C library.
 
 This implementation is synchronous, and thus supports only a subset of

@@ -70,7 +70,7 @@ static const spi_pins board_spi_pins[] __FLASH__ = {
      BOARD_SPI3_MISO_PIN,
      BOARD_SPI3_MOSI_PIN},
 #endif
-#ifdef STM32F2
+#if defined(STM32F2) && defined(BOARD_SPI3B_NSS_PIN)
     {BOARD_SPI3B_NSS_PIN,
      BOARD_SPI3B_SCK_PIN,
      BOARD_SPI3B_MISO_PIN,
@@ -121,7 +121,7 @@ void HardwareSPI::begin(SPIFrequency frequency, uint32 bitOrder, uint32 mode) {
 }
 
 void HardwareSPI::begin(void) {
-    this->begin(SPI_1_125MHZ, MSBFIRST, 0);
+    this->begin(SPI_1_362_500KHZ, MSBFIRST, 0);
 }
 
 void HardwareSPI::beginSlave(uint32 bitOrder, uint32 mode) {
@@ -416,8 +416,8 @@ static const spi_baud_rate baud_rates[MAX_SPI_FREQS] __FLASH__ = {
  * (CYCLES_PER_MICROSECOND == 72, APB2 at 72MHz, APB1 at 36MHz).
  */
 static spi_baud_rate determine_baud_rate(spi_dev *dev, SPIFrequency freq) {
-    if (rcc_dev_clk(dev->clk_id) == RCC_APB2 && freq == SPI_140_625KHZ) {
-        /* APB2 peripherals are too fast for 140.625 KHz */
+    if (rcc_dev_clk(dev->clk_id) == RCC_APB2 && freq == SPI_340_625KHZ) {
+        /* APB2 peripherals are too fast for 340.625 KHz */
         ASSERT(0);
         return (spi_baud_rate)~0;
     }

@@ -93,6 +93,10 @@ typedef enum {DISABLE = 0, ENABLE = !DISABLE} FunctionalState;
 * @retval None
 */
 
+#if defined(BOARD_maple_RET6)
+#define VBUS_SENSING_ENABLED
+#endif
+
 void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
 {
 	// ala42

@@ -43,24 +43,44 @@
 
 /**
  * @brief Defines the possible SPI communication speeds.
+ *
+ * Note these frequencies are based upon an 168Mhz Netduino clock,
+ * APB1 is 84Mhz, APB2 is 42Mhz
  */
+
+#if CYCLES_PER_MICROSECOND == 72
+
 typedef enum SPIFrequency {
-    SPI_18MHZ       = 0, /**< 18 MHz */
-    SPI_9MHZ        = 1, /**< 9 MHz */
-    SPI_4_5MHZ      = 2, /**< 4.5 MHz */
-    SPI_2_25MHZ     = 3, /**< 2.25 MHz */
-    SPI_1_125MHZ    = 4, /**< 1.125 MHz */
-    SPI_562_500KHZ  = 5, /**< 562.500 KHz */
-    SPI_281_250KHZ  = 6, /**< 281.250 KHz */
-    SPI_140_625KHZ  = 7, /**< 140.625 KHz */
+    SPI_18MHZ      = 0, /**< 18 MHz [APB1/2, APB2]*/
+    SPI_9MHZ       = 1, /**< 9 MHz [APB1/4, APB2/2] */
+    SPI_4_5MHZ     = 2, /**< 4.5 MHz [APB1/8, APB2/4] */
+    SPI_2_25MHZ    = 3, /**< 2.25 MHz [APB1/16, APB2/8] */
+    SPI_1_125MHZ   = 4, /**< 1.725 MHz [APB1/32, APB2/16] */
+    SPI_562_500KHZ = 5, /**< 562.500 KHz [APB1/64, APB2/32] */
+    SPI_281_250KHZ = 6, /**< 281.250 KHz [APB1/128, APB2/64] */
+    SPI_140_625KHZ = 7, /**< 140.625 KHz [APB1/256, APB2/128] */
 } SPIFrequency;
 
-#define MAX_SPI_FREQS 8
+#elif CYCLES_PER_MICROSECOND == 168
 
-#if CYCLES_PER_MICROSECOND != 72
+typedef enum SPIFrequency {
+    SPI_42MHZ       = 0, /**< 42 MHz [APB1/2, APB2]*/
+    SPI_21MHZ       = 1, /**< 21 MHz [APB1/4, APB2/2] */
+    SPI_10_5MHZ     = 2, /**< 10.5 MHz [APB1/8, APB2/4] */
+    SPI_5_25MHZ     = 3, /**< 5.25 MHz [APB1/16, APB2/8] */
+    SPI_2_725MHZ    = 4, /**< 2.725 MHz [APB1/32, APB2/16] */
+    SPI_1_362_500KHZ= 5, /**< 1,362.500 KHz [APB1/64, APB2/32] */
+    SPI_681_250KHZ  = 6, /**< 681.250 KHz [APB1/128, APB2/64] */
+    SPI_340_625KHZ  = 7, /**< 340.625 KHz [APB1/256, APB2/128] */
+} SPIFrequency;
+
+#else
 /* TODO [0.2.0?] something smarter than this */
-//#warning "Unexpected clock speed; SPI frequency calculation will be incorrect"
+#warning "Unexpected clock speed; SPI frequency calculation will be incorrect"
+
 #endif
+
+#define MAX_SPI_FREQS 8
 
 /**
  * @brief Wirish SPI interface.
@@ -226,7 +246,7 @@ public:
      * @see HardwareSPI::read()
      */
     uint8 recv(void);
-private:
+//private:
     spi_dev *spi_d;
 };
 

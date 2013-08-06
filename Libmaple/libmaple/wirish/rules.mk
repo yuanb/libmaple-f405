@@ -25,6 +25,7 @@ cppSRCS_$(d) := wirish_math.cpp		 \
                 boards/aeroquad32mini.cpp	 \
                 boards/discovery_f4.cpp	 \
                 boards/freeflight.cpp	 \
+                boards/netduinoplus2.cpp	 \
                 comm/HardwareSerial.cpp	 \
                 comm/HardwareSPI.cpp	 \
                 HardwareTimer.cpp	 \

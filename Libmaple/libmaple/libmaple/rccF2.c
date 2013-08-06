@@ -358,7 +358,12 @@ void SetupClock168MHz()
 	/******************************************************************************/
 	/************************* PLL Parameters *************************************/
 	/* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N */
+#if defined(BOARD_netduinoplus2)
+	// Scott Libert, 6/11/2013 - the netduino plus has a 25Mhz crystal, unlike maple and other boards
+	int PLL_M = 25;
+#else
 	int PLL_M = 8;
+#endif
 	int PLL_N = 336;
 
 	/* SYSCLK = PLL_VCO / PLL_P */
@@ -433,6 +438,12 @@ void SetupClock168MHz()
 		while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
 		{
 		}
+#if defined(BOARD_netduinoplus2)
+	// Scott Libert, 6/11/2013 - the netduino plus2 ethernet MCO1 pin should be driven by
+	// the HSE (25Mhz) clock, this is a requirement of the onboard ENC28J60 ethernet IC.
+		RCC->CFGR = (RCC->CFGR & ~(3 << 21)) | (2<<21);
+#endif
+
 	}
 	else
 	{ /* If HSE fails to start-up, the application will have wrong clock

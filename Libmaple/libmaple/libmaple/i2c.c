@@ -400,11 +400,23 @@ void i2c_master_enable(i2c_dev *dev, uint32 flags) {
     /* PE must be disabled to configure the device */
     ASSERT(!(dev->regs->CR1 & I2C_CR1_PE));
 
+#ifdef STM32F1
+    // On the STM32F103, pins PB6/7   alternate function defaults to I2C1
+    //                 , pins PB10/11 alternate function defaults to I2C2
+    //                 , it's possible to remap pins 8/9 to I2C1
+
     if ((dev == I2C1) && (flags & I2C_REMAP)) {
         afio_remap(AFIO_REMAP_I2C1);
         I2C1->sda_pin = 9;
         I2C1->scl_pin = 8;
     }
+#elif STM32F2
+    // On the STM32F2/F4 series, alternate functions default to "system".
+    // Therefore, each of the I2C devices must configure its alternate function selection
+    // Also, the remap option is *not* supported
+    gpio_set_af_mode(dev->gpio_port, dev->sda_pin, 4);
+    gpio_set_af_mode(dev->gpio_port, dev->scl_pin, 4);
+#endif
 
     /* Reset the bus. Clock out any hung slaves. */
     if (flags & I2C_BUS_RESET) {

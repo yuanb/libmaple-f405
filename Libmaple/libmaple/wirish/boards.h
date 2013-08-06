@@ -142,6 +142,8 @@ bool boardUsesPin(uint8 pin);
 #include "discovery_f4.h"
 #elif defined(BOARD_freeflight)
 #include "freeflight.h"
+#elif defined(BOARD_netduinoplus2)
+#include "netduinoplus2.h"
 #else
 /*
  * TODO turn this into a warning so people can:

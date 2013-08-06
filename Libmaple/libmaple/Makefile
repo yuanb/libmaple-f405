@@ -1,13 +1,21 @@
 # Try "make help" for more information on BOARD and MEMORY_TARGET;
 # these default to a Maple Flash build.
 #BOARD ?= maple
-BOARD ?= aeroquad32
+#BOARD ?= aeroquad32
 #BOARD ?= aeroquad32f1
 #BOARD ?= discovery_f4
 #BOARD ?= aeroquad32mini
 #BOARD ?= freeflight
-
+BOARD ?= netduinoplus2
 #V=1
+
+#CPUTYPE ?= cortex-m3 (USE THIS FOR STM32F1/STM32F2)
+CPUTYPE ?= cortex-m4 #(USE THIS FOR STM32F4, no h/w FPU)
+#CPUTYPE ?= cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16 -D__FPU_PRESENT #(USE THIS FOR STM32F4, h/w FPU Enabled) 
+#NOTE:  To get this to work, the CRT libraries must also be built for the FPU
+#These were found at:  C:\Program Files (x86)\Atmel\Atmel Studio 6.0\extensions\Atmel\ARMGCC\3.3.1.128\ARMGCCToolchain\lib\gcc\arm-none-eabi\4.7.0\fpu
+#CPUARCH ?= armv7-m (USE THIS FOR STM32F1/STM32F2)
+CPUARCH ?= armv7e-m #(USE THIS FOR STM32F4)
 
 .DEFAULT_GOAL := sketch
 
@@ -38,7 +46,8 @@ PRODUCT_ID := 0003
 ## linker options/flags.
 ##
 
-MEMORY_TARGET ?= flash
+MEMORY_TARGET ?= jtag
+#MEMORY_TARGET ?= flash
 
 # $(BOARD)- and $(MEMORY_TARGET)-specific configuration
 include $(MAKEDIR)/target-config.mk
@@ -65,6 +74,12 @@ ifeq ($(BOARD), discovery_f4)
 GLOBAL_FLAGS += -DF_CPU=168000000UL
 endif
 
+ifeq ($(BOARD), netduinoplus2)
+GLOBAL_FLAGS += -DF_CPU=168000000UL
+endif
+
+EXTRAINCDIRS += wirish/boards
+
 ifeq ($(MCU_FAMILY), STM32F2)
 	EXTRAINCDIRS += \
 		libmaple/usbF4/STM32_USB_Device_Library/Core/inc \
@@ -77,15 +92,15 @@ endif
 #GLOBAL_FLAGS += -DDISABLEUSB
 #GLOBAL_FLAGS += -DUSB_DISC_OD
 		   
-GLOBAL_CFLAGS   := -Os -g3 -gdwarf-2  -mcpu=cortex-m3 -mthumb -march=armv7-m \
+GLOBAL_CFLAGS   := -O0 -g3 -gdwarf-2  -mcpu=$(CPUTYPE) -mthumb -march=$(CPUARCH) \
 		   -nostdlib -ffunction-sections -fdata-sections	     \
 		   -Wl,--gc-sections $(GLOBAL_FLAGS)
 GLOBAL_CXXFLAGS := -fno-rtti -fno-exceptions -Wall $(GLOBAL_FLAGS)
-GLOBAL_ASFLAGS  := -mcpu=cortex-m3 -march=armv7-m -mthumb		     \
+GLOBAL_ASFLAGS  := -mcpu=$(CPUTYPE) -march=$(CPUARCH) -mthumb		     \
 		   -x assembler-with-cpp $(GLOBAL_FLAGS)
 LDFLAGS  = -T$(LDDIR)/$(LDSCRIPT) -L$(LDDIR)    \
-            -mcpu=cortex-m3 -mthumb -Xlinker     \
-            --gc-sections --print-gc-sections --march=armv7-m -Wall
+            -mcpu=$(CPUTYPE) -mthumb -Xlinker     \
+            --gc-sections --print-gc-sections --march=$(CPUARCH) -Wall
 
 ##
 ## Build rules and useful templates
@@ -113,6 +128,8 @@ LIBMAPLE_MODULES += $(SRCROOT)/libraries/Wire
 # Experimental libraries:
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/FreeRTOS
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/mapleSDfat
+LIBMAPLE_MODULES += $(SRCROOT)/libraries/EtherCard
+LIBMAPLE_MODULES += $(SRCROOT)/libraries/EEPROM
 
 # Call each module's rules.mk:
 $(foreach m,$(LIBMAPLE_MODULES),$(eval $(call LIBMAPLE_MODULE_template,$(m))))
