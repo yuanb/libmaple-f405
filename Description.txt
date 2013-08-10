@@ -22,4 +22,6 @@ WORK STILL TO BE DONE:
 
 - The HardWire (hardware-based I2C support) does not yet work.
 
+- Hardware FPU support (requires FPU-compiled version of c startup code)
+
 
