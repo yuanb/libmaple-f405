@@ -12,9 +12,9 @@ Debugging:
 
 ST-LINK/V2 JTAG sofware debugger was used, this is very inexpensive and worked very well.
 
-A gdb server that runs with the ST-LINK/V2 is available at:  https://github.com/texane/stlink
+A gdb server that runs with the ST-LINK/V2 is available from OpenOCD.
 
-Note that the texane gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project; a target description file for the netduino plus 2 was added.
+Note that the OpenOCD gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project; a target description file for the netduino plus 2 was added.
 
 The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  This approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and also  currently the jtag builds don't reserve the space for the eeprom emulation. 
 
