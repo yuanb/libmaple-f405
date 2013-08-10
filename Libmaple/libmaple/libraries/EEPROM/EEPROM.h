@@ -9,7 +9,7 @@
 		#define EEPROM_PAGE_SIZE	(uint16)0x400  /* Page size = 1KByte */
 	#elif defined (MCU_STM32F103ZE) || defined (MCU_STM32F103RE) || defined (MCU_STM32F103RD)
 		#define EEPROM_PAGE_SIZE	(uint16)0x800  /* Page size = 2KByte */
-	#elif defined (MCU_STM32F406VG)
+	#elif defined (MCU_STM32F405RG) || defined(MCU_STM32F407VG)
 		#define EEPROM_PAGE_SIZE (uint16)0x4000 /* Page size = 16kbyte*/
 	#else
 		#error	"No MCU type specified. Add something like -DMCU_STM32F103RB to your compiler arguments (probably in a Makefile)."
@@ -23,7 +23,7 @@
 		#define EEPROM_START_ADDRESS	((uint32)(0x8000000 + 512 * 1024 - 2 * EEPROM_PAGE_SIZE))
 	#elif defined (MCU_STM32F103RD)
 		#define EEPROM_START_ADDRESS	((uint32)(0x8000000 + 384 * 1024 - 2 * EEPROM_PAGE_SIZE))
-	#elif defined (MCU_STM32F406VG)
+	#elif defined (MCU_STM32F405RG)|| defined(MCU_STM32F407VG)
 		#define EEPROM_START_ADDRESS 	((uint32)(0x8004000))
 	#else
 		#error	"No MCU type specified. Add something like -DMCU_STM32F103RB to your compiler arguments (probably in a Makefile)."

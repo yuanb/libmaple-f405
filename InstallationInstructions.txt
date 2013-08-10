@@ -1,15 +1,20 @@
-Version 3.x of the AeroQuad Flight Software takes advantage of the use of libraries within the Arduino IDE environment.  There are two install methods to use to make sure the AeroQuad libraries are properly deteced by the Arduino IDE.
+libmaple-f405 was developed/debugging using the following software tools, which open-source or freely-available.
 
-Method 1:
-- Save the AeroQuad folder into your location of choice.
-- In the Arduino IDE, go to File->Preferences->Sketchbook location:
-- Select Browse and navigate to the folder where you saved the AeroQuad Flight Software
-- To verify that the libraries can be found, restart the Arduino IDE
-- Go to File->Sketchbook->Libraries
-- You should see multiple libraries prefaced with "AQ_"
+These Basic instructions from the libmaple form for the development environment setup were used:  http://forums.leaflabs.com/topic.php?id=681
 
-Method 2 (Use if you have other custom Arduino libraries you still want access to):
-- Copy the Libraries folder from the AeroQuad Flight Software to ./arduino-1.0/libraries (basically the libary path of the Arduino IDE itself)
-- Restart the Arduino IDE
+IDE:  Eclipse on Windows (Eclipse Juno Service Release 2), with the following plugins:
 
-Important note:  This version of the AeroQuad Flight Software is only compatible with the Arduino v1.0 IDE or greater.
+	CDT 8.1.2
+
+Compiler:  Code Sourcery G++ Lite 4.5.2 (http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/)
+
+Debugging:
+
+ST-LINK/V2 JTAG sofware debugger was used, this is very inexpensive and worked very well.
+
+A gdb server that runs with the ST-LINK/V2 is available at:  https://github.com/texane/stlink
+
+Note that the texane gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project; a target description file for the netduino plus 2 was added.
+
+The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  This approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and also  currently the jtag builds don't reserve the space for the eeprom emulation. 
+

@@ -47,13 +47,37 @@
  * On the Maple, let the default pins be in the same location as the Arduino
  * pins
  */
+#if defined(BOARD_netduinoplus2)
+#define SDA 23
+#define SCL 22
+#else
 #define SDA 19
 #define SCL 20
+#endif
 
 //#define I2C_DELAY(x) {uint32 time=micros(); while(time>(micros()+x));}
 #define I2C_DELAY(x) do{for(int i=0;i<x;i++) {asm volatile("nop");}}while(0)
+
+#if STM32_TICKS_PER_US == 168
+
+#define SOFT_STANDARD 58
+#define SOFT_FAST 16
+
+#elif STM32_TICKS_PER_US == 120
+
+#define SOFT_STANDARD 42
+#define SOFT_FAST 12
+
+#elif STM32_TICKS_PER_US == 72
+
 #define SOFT_STANDARD 25
 #define SOFT_FAST 7
+
+#else
+
+#error "STM32_TICKS_PER_US not defined - Soft I2C timing cannot be derived!"
+
+#endif
 
 class TwoWire : public WireBase {
  private:

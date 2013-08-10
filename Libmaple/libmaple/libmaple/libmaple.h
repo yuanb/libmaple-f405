@@ -42,9 +42,9 @@
  *
  * FIXME this has no business being here
  */
-#if defined(MCU_STM32F103VE) || defined(MCU_STM32F205VE) || defined(MCU_STM32F406VG)
+#if defined(MCU_STM32F103VE) || defined(MCU_STM32F205VE) || defined(MCU_STM32F407VG) || defined(MCU_STM32F405RG)
     /* e.g., Aeroquad32 */
-    #define USER_ADDR_ROM 0x08010000    /* ala42 */
+    #define USER_ADDR_ROM 0x08010000    /* Reserve lower 64K for boot, EEPROM emulation */
     #define USER_ADDR_RAM 0x20000C00
     #define STACK_TOP     0x20000800
 #elif defined(BOARD_freeflight)

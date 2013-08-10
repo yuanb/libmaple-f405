@@ -63,10 +63,10 @@ uint8 WireBase::endTransmission(void) {
     if (tx_buf_overflow) {
         return EDATA;
     }
-    process();
+    uint8 status = process();
     tx_buf_idx = 0;
     tx_buf_overflow = false;
-    return SUCCESS;
+    return status;
 }
 
 //TODO: Add the ability to queue messages (adding a boolean to end of function
@@ -80,7 +80,7 @@ uint8 WireBase::requestFrom(uint8 address, int num_bytes) {
     itc_msg.flags = I2C_MSG_READ;
     itc_msg.length = num_bytes;
     itc_msg.data = &rx_buf[rx_buf_idx];
-    process();
+    process(); //TODO:  Review status return code from this function.
     rx_buf_len += itc_msg.xferred;
     itc_msg.flags = 0;
     return rx_buf_len;

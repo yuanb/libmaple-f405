@@ -34,6 +34,7 @@
 #include "flash.h"
 #include "rcc.h"
 #include "bitband.h"
+#include "../wirish/boards.h"
 
 #define APB1                            RCC_APB1
 #define APB2                            RCC_APB2
@@ -165,6 +166,11 @@ typedef struct
 
 typedef uint32 uint32_t;
 
+void rcc_set_MCO1_output_source(rcc_mco1_clock_source source) {
+	rcc_reg_map *RCC = RCC_BASE;
+	RCC->CFGR = (RCC->CFGR & ~(RCC_CFGR_MCO1_MASK)) | source;
+}
+
 void SetupClock72MHz()
 {
 	uint32_t SystemCoreClock = 72000000;
@@ -174,7 +180,7 @@ void SetupClock72MHz()
 	/******************************************************************************/
 	/************************* PLL Parameters *************************************/
 	/* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N */
-	int PLL_M = 4;
+	int PLL_M = EXTERNAL_CLOCK_FREQUENCY_MHZ / 2;
 	int PLL_N = 216;
 
 	/* SYSCLK = PLL_VCO / PLL_P */
@@ -266,7 +272,7 @@ void SetupClock120MHz()
 	/******************************************************************************/
 	/************************* PLL Parameters *************************************/
 	/* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N */
-	int PLL_M = 8;
+	int PLL_M = EXTERNAL_CLOCK_FREQUENCY_MHZ;
 	int PLL_N = 240;
 
 	/* SYSCLK = PLL_VCO / PLL_P */
@@ -358,12 +364,7 @@ void SetupClock168MHz()
 	/******************************************************************************/
 	/************************* PLL Parameters *************************************/
 	/* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N */
-#if defined(BOARD_netduinoplus2)
-	// Scott Libert, 6/11/2013 - the netduino plus has a 25Mhz crystal, unlike maple and other boards
-	int PLL_M = 25;
-#else
-	int PLL_M = 8;
-#endif
+	int PLL_M = EXTERNAL_CLOCK_FREQUENCY_MHZ;
 	int PLL_N = 336;
 
 	/* SYSCLK = PLL_VCO / PLL_P */
@@ -438,12 +439,6 @@ void SetupClock168MHz()
 		while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
 		{
 		}
-#if defined(BOARD_netduinoplus2)
-	// Scott Libert, 6/11/2013 - the netduino plus2 ethernet MCO1 pin should be driven by
-	// the HSE (25Mhz) clock, this is a requirement of the onboard ENC28J60 ethernet IC.
-		RCC->CFGR = (RCC->CFGR & ~(3 << 21)) | (2<<21);
-#endif
-
 	}
 	else
 	{ /* If HSE fails to start-up, the application will have wrong clock

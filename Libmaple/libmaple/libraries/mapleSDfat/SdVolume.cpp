@@ -22,6 +22,9 @@
 #include <HardwareSerial.h>
 #include "SdFat.h"
 
+#include "usb_serial.h"
+#define SerialDebug SerialUSB
+
 //------------------------------------------------------------------------------
 // raw block cache
 // init cacheBlockNumber_to invalid SD block number

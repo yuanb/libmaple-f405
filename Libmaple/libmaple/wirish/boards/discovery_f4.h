@@ -37,6 +37,8 @@
 
 #define Port2Pin(port, bit) ((port-'A')*16+bit)
 
+#define EXTERNAL_CLOCK_FREQUENCY_MHZ 8
+
 #define CYCLES_PER_MICROSECOND  168
 
 

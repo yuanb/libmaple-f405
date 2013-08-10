@@ -79,6 +79,7 @@ GLOBAL_FLAGS += -DF_CPU=168000000UL
 endif
 
 EXTRAINCDIRS += wirish/boards
+EXTRAINCDIRS += libraries
 
 ifeq ($(MCU_FAMILY), STM32F2)
 	EXTRAINCDIRS += \
@@ -130,6 +131,8 @@ LIBMAPLE_MODULES += $(SRCROOT)/libraries/FreeRTOS
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/mapleSDfat
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/EtherCard
 LIBMAPLE_MODULES += $(SRCROOT)/libraries/EEPROM
+LIBMAPLE_MODULES += $(SRCROOT)/libraries/i2cdevlib
+LIBMAPLE_MODULES += $(SRCROOT)/libraries/L3G4200D
 
 # Call each module's rules.mk:
 $(foreach m,$(LIBMAPLE_MODULES),$(eval $(call LIBMAPLE_MODULE_template,$(m))))

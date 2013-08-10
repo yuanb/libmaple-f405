@@ -6,7 +6,8 @@
 MEMORY
 {
   ram (rwx) : ORIGIN = 0x20000C00, LENGTH = 125K
-  rom (rx)  : ORIGIN = 0x08010000, LENGTH = 960K  /* ala42 */
+  /* Note:  ROM Low-64K (0x08000000-0x0800FFFF) reserved for EEPROM emulation, boot */  
+  rom (rx)  : ORIGIN = 0x08010000, LENGTH = 960K
 }
 
 GROUP(libcs4_stm32_high_density.a)

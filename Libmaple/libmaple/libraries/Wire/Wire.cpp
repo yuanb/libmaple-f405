@@ -128,6 +128,7 @@ uint8 TwoWire::process() {
     // shift out the address we're transmitting to
     i2c_shift_out(sla_addr);
     if (!i2c_get_ack()) {
+    	i2c_stop();	// Clean up in case of error
         return ENACKADDR;
     }
     // Recieving
@@ -146,6 +147,7 @@ uint8 TwoWire::process() {
         for (uint8 i = 0; i < itc_msg.length; i++) {
             i2c_shift_out(itc_msg.data[i]);
             if (!i2c_get_ack()) {
+            	i2c_stop();
                 return ENACKTRNS;
             }
             itc_msg.xferred++;
@@ -179,4 +181,4 @@ TwoWire::~TwoWire() {
 }
 
 // Declare the instance that the users of the library can use
-TwoWire Wire(SCL, SDA, SOFT_STANDARD);
+TwoWire Wire(SCL, SDA, SOFT_FAST/*SOFT_STANDARD*/);

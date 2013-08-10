@@ -26,6 +26,8 @@
 //pointer to spi object
 HardwareSPI *SPIn;
 
+#define SerialDebug SerialUSB
+
 //------------------------------------------------------------------------------
 // functions for hardware SPI
 /** Send a byte to the card */

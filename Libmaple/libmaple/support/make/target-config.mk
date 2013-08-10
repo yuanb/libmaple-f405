@@ -85,7 +85,7 @@ ifeq ($(BOARD), freeflight)
 endif
 
 ifeq ($(BOARD), discovery_f4)
-   MCU := STM32F406VG
+   MCU := STM32F407VG
    PRODUCT_ID := 0003
    ERROR_LED_PORT := GPIOD
    ERROR_LED_PIN  := 14
@@ -96,7 +96,7 @@ ifeq ($(BOARD), discovery_f4)
 endif
 
 ifeq ($(BOARD), netduinoplus2)
-   MCU := STM32F406VG
+   MCU := STM32F405RG
    PRODUCT_ID := 0003
    ERROR_LED_PORT := GPIOC
    ERROR_LED_PIN  := 14

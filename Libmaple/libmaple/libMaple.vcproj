@@ -27,7 +27,7 @@
 				ReBuildCommandLine="make clean &amp;&amp; make library"
 				CleanCommandLine="make clean"
 				Output="libMaple.a"
-				PreprocessorDefinitions="WIN32;_DEBUG;BOARD_discovery_f4;MCU_STM32F406VG;STM32F2;STM32_HIGH_DENSITY"
+				PreprocessorDefinitions="WIN32;_DEBUG;BOARD_discovery_f4;MCU_STM32F405RG;STM32F2;STM32_HIGH_DENSITY"
 				IncludeSearchPath=""
 				ForcedIncludes=""
 				AssemblySearchPath=""

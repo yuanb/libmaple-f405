@@ -593,6 +593,17 @@ typedef enum rcc_ahb_divider {
 
 void rcc_set_prescaler(rcc_prescaler prescaler, uint32 divider);
 
+typedef enum rcc_mco1_clock_source {
+	RCC_CFGR_MCO1_HSI = 0x0 << 21,
+	RCC_CFGR_MCO1_LSE = 0x1 << 21,
+	RCC_CFGR_MCO1_HSE = 0x2 << 21,
+	RCC_CFGR_MCO1_PLL = 0x3 << 21,
+} rcc_mco1_clock_source;
+
+#define  RCC_CFGR_MCO1_MASK					((uint32)0x00600000)
+
+void rcc_set_MCO1_output_source(rcc_mco1_clock_source source);
+
 #ifdef __cplusplus
 } // extern "C"
 #endif

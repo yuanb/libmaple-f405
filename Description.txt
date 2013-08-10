@@ -1,0 +1,25 @@
+libmaple-f405 is a library designed to enable C++ programming of the Netduino Plus 2 and other STM32 F4 MCU Platforms using the Arduino programming API and also provide access to the Netduino Plus 2 peripherals.  This library is released under the GPL v2 license.
+
+This project is primarily based upon ala42's AeroQuad F4 port (https://github.com/AeroQuad/AeroQuad) of the Leaf Labs maple library, which notably extends the Leaf Labs Maple library to provide support for STM32 USB OTG_FS.  This is key since USB peripheral support changed drastically from the original STM32 F1 platform from which libmaple started.  AeroQuad is under the GPLV3 License.
+
+This port updates the AeroQuad sources with the HardwareI2C support from the current libmaple library (https://github.com/leaflabs/libmaple/tree/master/libraries/Wire).  The Maple Library is under the MIT license.
+
+This port adds support for peripherals and I/O map of the Netduino Plus 2 board, and more generally for STM32F405 processors.  This library includes support for the Netduino Plus 2's 25Mhz system clock, an onboard ENC28J60 Ethernet Network interface IC, and a micro SD Card Reader, as well as Arduino UNO pin-compatible ADC, Digital I/O & PWM pins.  
+
+In order to support the Netduino Plus 2's ENC28J60 Ethernet IC, this port incorporates the JeeLabs Ethercard Library (https://github.com/jcw/ethercard) for TCP & UDP support on the ENC28J60 Ethernet IC, including support for DHCP and DNS.  This library is under the GPL2 license.
+
+This library also includes a port of the main i2cdev library, which enables Jeff Rowberg's extensive i2cdevlib (https://github.com/jrowberg/i2cdevlib) which provides source code for many common I2C devices.  This library is under the MIT license.
+
+This library also includes a port of X893's Maple (STM32F10X) EEPROM emulation Library (http://akb77.com/g/stm32/maple-eeprom-emulation-library/), to provide Flash-based EEPROM emulation on the STM32 F4.  This library is unlicensed by the author, who has stated it is freely available with no restriction.
+
+See InstallationInstructions.txt for a description of the development environment used to build/debug this library on a Netduino Plus 2 or other STM32F4 platform.
+
+If you have any questions or suggestions, please email me at scott@kauailabs.com.
+
+WORK STILL TO BE DONE:
+
+- The JTAG version does not support EEPROM emulation, this needs to be resolved via introduction of enhanced linker scripts that partition the reset vector table into low Flash memory, and the remainder of the application in an area above the allocated EEPROM emulation area.
+
+- The HardWire (hardware-based I2C support) does not yet work.
+
+

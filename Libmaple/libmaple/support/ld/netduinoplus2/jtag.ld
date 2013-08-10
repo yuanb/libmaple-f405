@@ -5,7 +5,8 @@
 
 MEMORY
 {
-  ram (rwx) : ORIGIN = 0x20000000, LENGTH = 128K
+  ram (rwx) : ORIGIN = 0x20000000, LENGTH = 125K /*Top 3K reserved for stack */
+  /* Note:  ROM Low-64K (0x08000000-0x0800FFFF) reserved for EEPROM emulation, boot */
   rom (rx)  : ORIGIN = 0x08000000, LENGTH = 1024K
 }
 

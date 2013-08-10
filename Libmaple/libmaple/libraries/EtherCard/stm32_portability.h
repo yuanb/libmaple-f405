@@ -15,7 +15,7 @@
 
 typedef uint8 uint8_t;
 typedef uint16 uint16_t;
-typedef uint32 uint32_t;
+typedef long unsigned int uint32_t;
 typedef uint32 processor_word;
 typedef int16 int16_t;
 #include <string.h> // Required include for memset/memcpy
@@ -37,10 +37,10 @@ void sei();
  * memory access.
  */
 
-typedef char prog_char;
+typedef const char prog_char;
 typedef prog_char * PGM_P;	// Same as in arduino
-byte pgm_read_byte(const prog_char *addr);
-size_t strlen_P ( const prog_char * str );
+byte pgm_read_byte( prog_char *addr);
+size_t strlen_P ( prog_char * str );
 #define PROGMEM __FLASH__	// on STM32, use __FLASH__ attribute
 typedef char __FlashStringHelper; // on STM32
 #define PSTR(str) (PGM_P)str

@@ -64,11 +64,14 @@ void boardInit(void) {
 	// The following configuration items were ported from the
 	// Netduino Plus 2 firmware, file name IO_Init.c, function BootstrapCode_GPIO()
 
-	// Configure MCO1 output, to output a 25Mhz clock for use by the onboar
-	// ethernet controller; set to alternate function 0 (MCO1), 100Mhz speed, push-pull
+	// set MCO1 pin to alternate function 0 (MCO1),
+	// 100Mhz speed, push-pull
 
 	gpio_set_mode(GPIOA,8,GPIO_AF_OUTPUT_PP_100MHZ);
 	gpio_set_af_mode(GPIOA,8,0);	// AF0 - system function, MCO1
+	// Configure MCO1 output clock to 25Mhz for use by
+	// the onboard ENC28J60 ethernet controller
+	rcc_set_MCO1_output_source(RCC_CFGR_MCO1_HSE);
 
     // optionally...turn on power headers automatically (important if we're debugging/deploying via COM1 on pins D0/D1)
     // PB2: CONTROL_OF_POWER_HEADERS

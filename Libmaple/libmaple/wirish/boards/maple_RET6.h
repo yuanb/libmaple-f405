@@ -35,6 +35,8 @@
 #ifndef _BOARDS_MAPLE_RET6_H_
 #define _BOARDS_MAPLE_RET6_H_
 
+#define EXTERNAL_CLOCK_FREQUENCY_MHZ 8
+
 /* A few of these values will seem strange given that it's a
  * high-density board. */
 
