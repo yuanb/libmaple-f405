@@ -49,7 +49,12 @@ SECTIONS
         /*
          * STM32 vector table.  Leave this here.  Yes, really.
          */
-        *(.stm32.interrupt_vector)
+        KEEP(*(.stm32.interrupt_vector))
+
+	   /* If specified, relocate the remainder of the .text */
+	   /* section to the CODE start offset address */
+
+	   . = DEFINED(_CODE_START_OFFSET) ? _CODE_START_OFFSET : .;
 
         /*
          * Program code and vague linking

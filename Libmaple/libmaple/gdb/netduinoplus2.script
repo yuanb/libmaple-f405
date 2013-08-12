@@ -27,9 +27,12 @@ monitor halt
 monitor poll
 
 monitor flash probe 0
-monitor flash protect 0 0 11 off
+monitor flash protect 0 0 1 off
+monitor flash protect 0 4 11 off
 monitor reset halt
-monitor flash erase_sector 0 0 11
+monitor flash erase_sector 0 0 1
+monitor flash erase_sector 0 4 11
 monitor flash write_image C:\\Maple\\AeroQuad\\Libmaple\\libmaple\\build\\netduinoplus2.elf
-monitor flash protect 0 0 11 on
+monitor flash protect 0 0 1 on
+monitor flash protect 0 4 11 on
 monitor soft_reset_halt
