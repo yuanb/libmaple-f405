@@ -29,5 +29,6 @@ Debugging:
 
   The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  This approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and also  currently the jtag builds don't reserve the space for the eeprom emulation. 
 
+Additional instructions for OpenOCD debugging are avaiable at:  http://wiki.leaflabs.com/index.php?title=Maple_JTAG_How_To
 
 
