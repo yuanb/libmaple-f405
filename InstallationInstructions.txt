@@ -1,4 +1,4 @@
-libmaple-f405 was developed/debugging using the following software tools, which open-source or freely-available.
+libmaple-f405 was developed/debugging using the following software tools, which open-source or freely-available. The only required component to be purchased is the ST-LINK/V2 JTAG programmer/debugger described below.
 
 These Basic instructions from the libmaple form for the development environment setup were used:  http://forums.leaflabs.com/topic.php?id=681
 
@@ -6,15 +6,28 @@ IDE:  Eclipse on Windows (Eclipse Juno Service Release 2), with the following pl
 
 	CDT 8.1.2
 
+  Zylin Embedded CDT plugin
+     Update URL:   http://opensource.zylin.com/zylincdt
+
 Compiler:  Code Sourcery G++ Lite 4.5.2 (http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/)
 
 Debugging:
 
-ST-LINK/V2 JTAG sofware debugger was used, this is very inexpensive and worked very well.
+- ST-LINK/V2 JTAG in-circuit debugger was used, this is very inexpensive and worked very well.
 
-A gdb server that runs with the ST-LINK/V2 is available from OpenOCD.
+  The ST-LINK/V2 can be purchased at www.digikey.com (among others) for approximately $40.
 
-Note that the OpenOCD gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project; a target description file for the netduino plus 2 was added.
+  Additional utilities for the ST-LINK/V2 (for windows) are available on the STM website, at
 
-The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  This approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and also  currently the jtag builds don't reserve the space for the eeprom emulation. 
+  A cross-platfrom, open-source ST-link/V2 Utility is available at code.google.com/p/qstlink2
+
+- OpenOCD, version 0.6.1 (windows version available at http://www.freddiechopin.info/en/download/category/4-openocd)
+
+  OpenOCD includes A gdb server that runs with the ST-LINK/V2.
+
+  Note that the OpenOCD gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project; a target description file for the netduino plus 2 was added.
+
+  The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  This approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and also  currently the jtag builds don't reserve the space for the eeprom emulation. 
+
+
 
