@@ -1,19 +1,33 @@
 libmaple-f405 was developed/debugging using the following software tools, which open-source or freely-available. The only required component to be purchased is the ST-LINK/V2 JTAG programmer/debugger described below.
 
-These Basic instructions from the libmaple form for the development environment setup were used:  http://forums.leaflabs.com/topic.php?id=681
+Installation Instructions
 
-IDE:  Eclipse on Windows (Eclipse Juno Service Release 2), with the following plugins:
+1) Install the Maple IDE, available at http://leaflabs.com/docs/maple-ide-install.html
+
+This installation notably includes the Code Sourcery G++ Lite 4.5.2 compiler
+
+1b) To ensure the compiler and tools are available, add the following to the Path:
+
+  C:\maple-ide-0.0.12-windowsxp32\hardware\tools\arm\bin
+
+2) IDE:  Eclipse on Windows (Eclipse Juno Service Release 2), with the following plugins:
 
 	CDT 8.1.2
 
-  Zylin Embedded CDT plugin
-     Update URL:   http://opensource.zylin.com/zylincdt
+	A URL for this software, including the CDT, is at:  
+	
+	http://www.eclipse.org/downloads/packages/eclipse-ide-cc-developers/junosr2
 
-Compiler:  Code Sourcery G++ Lite 4.5.2 (http://www.mentor.com/embedded-software/sourcery-tools/sourcery-codebench/editions/lite-edition/)
+3) Zylin embedded CDT Plugin
+	
+	Once Eclipse is installed, the following plugin must be installed
+	
+    Zylin Embedded CDT plugin
+      Update URL:   http://opensource.zylin.com/zylincdt
 
-Debugging:
+4) Debugging:
 
-- ST-LINK/V2 JTAG in-circuit debugger was used, this is very inexpensive and worked very well.
+4a) ST-LINK/V2 JTAG in-circuit debugger was used, this is very inexpensive and worked very well.
 
   The ST-LINK/V2 can be purchased at www.digikey.com (among others) for approximately $40.
 
@@ -21,14 +35,49 @@ Debugging:
 
   A cross-platfrom, open-source ST-link/V2 Utility is available at code.google.com/p/qstlink2
 
-- OpenOCD, version 0.6.1 (windows version available at http://www.freddiechopin.info/en/download/category/4-openocd)
+4b) In order to interface eclipse with the ST-LINK/V2 JTAG in-circuit debugger, the OpenOCD Server is used.
+
+  OpenOCD, version 0.6.1 (windows version available at http://www.freddiechopin.info/en/download/category/4-openocd)
 
   OpenOCD includes A gdb server that runs with the ST-LINK/V2.
 
-  Note that the OpenOCD gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project; a target description file for the netduino plus 2 was added.
+  Note that the OpenOCD gdb server comes with gdb debug scripts for different targets and are included in the eclipse project file in the libmaple-f405 project;
+  a target description file for the netduino plus 2 was added.
 
-  The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  This approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and also  currently the jtag builds don't reserve the space for the eeprom emulation. 
+  The debugging process used was to configure libmaple-f405 (in the Makefile) as a "jtag" target (as opposed to "flash" or "ram").  
+  his approach worked well, with the exceptions that the project typically needs to be loaded twice due to some as-yet-undebugged issue and 
+  also currently the jtag builds don't reserve the space for the eeprom emulation. 
+  
+  Additional instructions for OpenOCD debugging are avaiable at:  http://wiki.leaflabs.com/index.php?title=Maple_JTAG_How_To
+  
+  *To configure OpenOCD within Eclipse
+  
+  Run->External Tools->External Tools Configuration...
+  
+  Add a new configuration, name it "OpenOCD"
+  In the "main" tab, under Location, provide the path to the location of Open OCD.  E.g., C:\OpenOCD\openocd-0.6.1\bin-x64\openocd-x64-0.6.1.exe
+  In the same "main" tab, in the Arguments window, enter the following:
 
-Additional instructions for OpenOCD debugging are avaiable at:  http://wiki.leaflabs.com/index.php?title=Maple_JTAG_How_To
+  -f C:\OpenOCD\openocd-0.6.1\scripts\interface\stlink-v2.cfg -f C:\OpenOCD\openocd-0.6.1\scripts\target\stm32f4x_stlink.cfg
+  
+5) Building
 
+   In Eclipse, select Project->Build.  You might find it necessary to Project->Clean first to remove old build output files.
 
+6) Debugging
+
+   6a) To start the OpenOCD Server, Select Run->ExternalTools->OpenOCD (where OpenOCD is the name provided earlier on the "main" tab)
+  
+    Once the OpenOCD Server has started, the debug session can be started.
+	
+   6b) To start a debug session, first create a debug configuration:
+   
+   Select Run->Debug Configurations...
+   Select "Zylin Embedded Debug (Cygwin)"
+   Then, Add a new configuration (e.g., (libmaple NetduinoPlus2 OpenOCD Debug Session"); the new configuration will be a child node of Zylin Embedded Debug (Cygwin)
+   On the Debugger Tab:
+   - Set GDB Debugger to arm-none-eabi-gdb
+   - Set GDB Command File to <root>\Libmaple\libmaple\gdb\netduinoplus2.script
+   - Select "Verbose console mode"
+
+  Once the debug configuration is created, and the open ocd session is started, start debugging via Run->Debug
